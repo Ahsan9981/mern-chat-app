@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
 
                     room.sockets.push(socket.id);
                     room.participants++;
-                    io.emit('channel', room);
+                    io.emit('room', room);
                 }
 
               } else {
@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
 
                 room.sockets.splice(index, 1);
                 room.participants--;
-                io.emit('channel', room);
+                io.emit('room', room);
               }
           }
       });
@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
 
               room.sockets.splice(index, 1);
               room.participants--;
-              io.emit('channel', room);
+              io.emit('room', room);
           }
       });
   });
