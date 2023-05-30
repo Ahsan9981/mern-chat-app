@@ -18,20 +18,17 @@ const Chat = () => {
     }, []);
 
     const configureSocket = () => {
-
-        const socket = socketClient(SERVER);
-
-        socket.on('connection', () => {
-          if (room) {
-            handleRoomSelect(room.id);
-          }
-        });
-
-        socket.on('room', (room) => {
-
-          console.log(rooms, "checking this one")
-
-          const updatedRooms = rooms.map((r) => {
+      const socket = socketClient(SERVER);
+    
+      socket.on('connection', () => {
+        if (room) {
+          handleRoomSelect(room.id);
+        }
+      });
+    
+      socket.on('room', (room) => {
+        setRooms((prevRooms) => {
+          const updatedRooms = prevRooms.map((r) => {
             if (r.id === room.id) {
               return {
                 ...r,
@@ -40,11 +37,13 @@ const Chat = () => {
             }
             return r;
           });
-          setRooms(updatedRooms);
+          return updatedRooms;
         });
-        
-        socket.on('message', (message) => {
-          const updatedRooms = rooms.map((r) => {
+      });
+    
+      socket.on('message', (message) => {
+        setRooms((prevRooms) => {
+          const updatedRooms = prevRooms.map((r) => {
             if (r.id === message.room_id) {
               const updatedMessages = r.messages ? [...r.messages, message] : [message];
               return {
@@ -54,10 +53,12 @@ const Chat = () => {
             }
             return r;
           });
-          setRooms(updatedRooms);
+          return updatedRooms;
         });
-        setSocket(socket);
-      };
+      });
+    
+      setSocket(socket);
+    };
 
     const loadRooms = async () => {
         const response = await fetch('http://localhost:5000/rooms');
