@@ -15,7 +15,7 @@ const Chat = () => {
     useEffect(() => {
         loadRooms();
         configureSocket();
-    },[]);
+    }, []);
 
     const configureSocket = () => {
 
@@ -28,6 +28,8 @@ const Chat = () => {
         });
 
         socket.on('room', (room) => {
+
+          console.log(rooms, "checking this one")
 
           const updatedRooms = rooms.map((r) => {
             if (r.id === room.id) {
@@ -61,6 +63,7 @@ const Chat = () => {
         const response = await fetch('http://localhost:5000/rooms');
         const data = await response.json();
         setRooms(data.rooms);
+        console.log(rooms)
     };
 
     const handleRoomSelect = (id) => {
