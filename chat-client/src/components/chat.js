@@ -4,7 +4,7 @@ import './chat.css';
 import  MessagesPanel from './message-panel';
 import  RoomList from './room-list';
 
-const SERVER = 'http://localhost::5000';
+const SERVER = 'http://localhost:5000';
 
 const Chat = () => {
 
