@@ -13,12 +13,6 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-})
-
-
 io.on('connection', (socket) => {
 
   console.log('new client connected');
@@ -74,7 +68,6 @@ io.on('connection', (socket) => {
   });
 
 });
-
 
 app.get('/rooms', (req, res) => {
   res.json({
