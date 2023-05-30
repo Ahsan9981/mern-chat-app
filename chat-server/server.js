@@ -5,7 +5,7 @@ dotenv.config();
 
 const app = express();
 const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, { cors: { origin: '*' }});
 const ROOMS = require('./configurations/rooms');
 
 
@@ -82,4 +82,4 @@ app.get('/rooms', (req, res) => {
   })
 });
 
-app.listen(PORT, () => console.log(`Server is listening at port ${PORT}`));
+server.listen(PORT, () => console.log(`Server is listening at port ${PORT}`));
